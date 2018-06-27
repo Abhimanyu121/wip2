@@ -21,6 +21,10 @@ import android.widget.PopupWindow
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.fragment_notifications.view.*
 import kotlinx.android.synthetic.main.popup.*
+import android.content.Context.LAYOUT_INFLATER_SERVICE
+import android.graphics.drawable.ColorDrawable
+import android.support.v4.content.ContextCompat
+import android.widget.Button
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -45,6 +49,7 @@ class notifications : Fragment() {
     var mView: View? = null
     var nname: String? = null
     var ndesc: String? = null
+    var fdesc: String? = null
     var ncount: Int? = null
     var i: Int = 0
     var j: Int = 0
@@ -82,6 +87,9 @@ class notifications : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
+        val fm=getChildFragmentManager()
+        val ft=fm.beginTransaction()
+        ft.remove(notifications())
         listener = null
     }
 
@@ -154,10 +162,11 @@ class notifications : Fragment() {
                 if (task.isSuccessful) {
                     nname=task.result.get("name").toString()
                     ndesc=task.result.get("desc").toString()
+                    fdesc=task.result.get("fdesc").toString()
 
                     Log.e("bleh5",nname)
                     Log.e("bleh6",ndesc)
-                    tvn(nname!!,ndesc!!)
+                    tvn(nname!!,ndesc!!,fdesc!!)
 
 
                 }
@@ -166,7 +175,7 @@ class notifications : Fragment() {
             i--
         }
     }
-    fun tvn(name:String?,desc:String?){
+    fun tvn(name:String?,desc:String?,fdesc:String?){
         var cardView:CardView= CardView(getContext()!!)
         var linearLayout:LinearLayout=LinearLayout(getContext()!!)
         var tvName:TextView=TextView(getContext()!!)
@@ -180,12 +189,14 @@ class notifications : Fragment() {
         linearLayout!!.setOrientation(LinearLayout.VERTICAL)
         linearLayout!!.addView(tvName)
         linearLayout!!.addView(tvDesc)
+        linearLayout.setBackgroundColor(Color.parseColor("#F5F5F5"))
 
         cardView!!.addView(linearLayout)
         cardView!!.setOnClickListener{
-            initiatePopupWindow(cardView!!,name,desc)
+            initiatePopupWindow(cardView!!,name,fdesc)
 
         }
+
         var ncont:LinearLayout=ncontainer
 
         ncont.addView(cardView)
@@ -198,20 +209,37 @@ class notifications : Fragment() {
     private fun initiatePopupWindow(v: View,name: String?,desc:String?) {
         try {Log.e("blehpop1","f1")
             //We need to get the instance of the LayoutInflater, use the context of this activity
+            val inflater = getContext()!!.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val customView = inflater.inflate(R.layout.popup, null)
+            var tname=customView.findViewById<TextView>(R.id.ptitle)
+            var tdesc=customView.findViewById<TextView>(R.id.pdesc)
+            var tbutton=customView.findViewById<Button>(R.id.pcbutton)
 
-          val  pw = PopupWindow(poplayout,300,400,true)
-            // display the popup in the center
-            pw.showAtLocation(v, Gravity.CENTER, 0, 0)
-
-            ptitle.setText(name)
-            pdesc.setText(desc)
-
-            pcbutton.setOnClickListener{
-                pw.dismiss()
+            var mPopupWindow = PopupWindow(
+                    customView,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            tname.setText(name)
+            tdesc.setText(desc)
+            mPopupWindow.setFocusable(true);
+            mPopupWindow.setTouchable(true);
+            tbutton.setOnClickListener{
+                mPopupWindow.dismiss()
             }
 
+
+            mPopupWindow.showAtLocation(v, Gravity.CENTER,0,0);
+
+            // display the popup in the center
+
+
+
+            mPopupWindow.update();
+
+
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("blehpop2",e.message)
         }
 
     }

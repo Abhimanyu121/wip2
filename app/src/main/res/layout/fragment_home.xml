@@ -11,17 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dip"
-            android:src="@drawable/logo"
-            android:background="@color/lbg"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="300dip"
+                android:layout_height="100dip"
+                android:src="@drawable/logo"
+                android:background="@color/lbg"/>
 
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="100dip"
-            android:src="@drawable/linux" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dip"
+                android:src="@drawable/linux"
+                android:background="@color/lbg"/>
+
+        </LinearLayout>
 
         <!-- TODO: Update blank fragment layout -->
 
@@ -29,7 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/cvhe"
-            app:cardCornerRadius="5dp">
+            app:cardBackgroundColor="#546E7A"
+            app:cardCornerRadius="2dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,7 +49,7 @@
                     android:text="Highlights"
                     android:textAllCaps="true"
                     android:textSize="25dip"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="#ffff"
                     android:shadowColor="@color/colorPrimary"
                     android:textStyle="bold"/>
 
@@ -53,7 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cvno"
-            app:cardCornerRadius="5dp">
+            app:cardBackgroundColor="#009688"
+            app:cardCornerRadius="2dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,7 +76,7 @@
                     android:textStyle="bold"
                     android:textSize="25dip"
                     android:shadowColor="@color/colorPrimary"
-                    android:textColor="@color/colorAccent"/>
+                    android:textColor="#ffff"/>
 
 
             </LinearLayout>
@@ -75,7 +84,8 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="5dp">
+            app:cardBackgroundColor="#00BCD4"
+            app:cardCornerRadius="2dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:text="About Us"
                     android:textStyle="bold"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="#ffff"
                     android:shadowColor="@color/colorPrimary"/>
 
             </LinearLayout>

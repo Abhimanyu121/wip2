@@ -3,19 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/poplayout">
+    android:id="@+id/poplayout"
+    android:padding="2dp">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="25dip"
+        android:textColor="@color/colorAccent"
         android:id="@+id/ptitle" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/pdesc"
+        android:textSize="22dip"
         android:maxLines="10"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="22dip"
+        android:text="CLOSE"
         android:id="@+id/pcbutton"/>
 
 

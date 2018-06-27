@@ -95,6 +95,9 @@ class home : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
+        val fm=getChildFragmentManager()
+        val ft=fm.beginTransaction()
+        ft.remove(home())
         listener = null
     }
 
@@ -189,7 +192,7 @@ class home : Fragment() {
         tvt.setText(str)
         tvt.setHeight(100)
         tvt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f)
-        tvt.setTextColor(Color.parseColor("#817fa0"))
+        tvt.setTextColor(Color.parseColor("#F5F5F5"))
         llno.addView(tvt)
 
     }
@@ -238,7 +241,7 @@ class home : Fragment() {
         tvt.setText(str)
         tvt.setHeight(100)
         tvt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f)
-        tvt.setTextColor(Color.parseColor("#817fa0"))
+        tvt.setTextColor(Color.parseColor("#F5F5F5"))
         llhe.addView(tvt)
 
     }
