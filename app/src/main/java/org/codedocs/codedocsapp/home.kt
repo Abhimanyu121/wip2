@@ -74,7 +74,7 @@ class home : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         mView=inflater.inflate(R.layout.fragment_home, container, false)
-        getnotifc()
+
         gethelc()
         return mView
     }
@@ -95,9 +95,7 @@ class home : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        val fm=getChildFragmentManager()
-        val ft=fm.beginTransaction()
-        ft.remove(home())
+
         listener = null
     }
 
@@ -137,65 +135,8 @@ class home : Fragment() {
                 }
     }
 
-    fun getnotifc() {
-
-        var notifs = db.collection("count").document("counts")
-        notifs.get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                ncount = Integer.parseInt(task.result.get("count").toString())
-                Log.e("bleh2", "success")
-                Log.e("bleh", "" + ncount)
-                Timer().schedule(object : TimerTask() {
-                    override fun run () {
-                        i = ncount as Int
-                        getnotis()
-
-                    }
-                }, 3000)
 
 
-
-            }
-        }
-
-
-    }
-
-
-    fun getnotis() {
-        var k=i
-        var l=(k-3)
-        while (i>0||i==1||i==2||i==3) {
-            var notifs = db.collection("notifs").document(i.toString())
-            notifs.get().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    nname=task.result.get("name").toString()
-                    ndesc=task.result.get("desc").toString()
-
-                    Log.e("bleh5",nname)
-                    Log.e("bleh6",ndesc)
-                    tvn(nname!!)
-
-                    tvn(ndesc!!)
-
-
-                }
-
-            }
-            i--
-        }
-
-
-    }
-    fun tvn(str:String){
-        val tvt=TextView(getContext())
-        tvt.setText(str)
-        tvt.setHeight(100)
-        tvt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f)
-        tvt.setTextColor(Color.parseColor("#F5F5F5"))
-        llno.addView(tvt)
-
-    }
     fun gethelc(){
         var notifs = db.collection("hcount").document("count")
         notifs.get().addOnCompleteListener { task ->
@@ -226,8 +167,7 @@ class home : Fragment() {
 
                     Log.e("bleh5",hname)
                     Log.e("bleh6",hdesc)
-                    tvh(hname!!)
-                    tvh(hdesc!!)
+                    tvh(hname!!,hdesc!!)
                 }
 
             }
@@ -236,13 +176,19 @@ class home : Fragment() {
 
 
     }
-    fun tvh(str:String){
+    fun tvh(str:String,desc:String){
         val tvt=TextView(getContext())
+        val tvd=TextView(getContext())
         tvt.setText(str)
         tvt.setHeight(100)
         tvt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f)
         tvt.setTextColor(Color.parseColor("#F5F5F5"))
+        tvd.setText(desc)
+        tvd.setHeight(100)
+        tvd.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f)
+        tvd.setTextColor(Color.parseColor("#000000"))
         llhe.addView(tvt)
+        llhe.addView(tvd)
 
     }
 

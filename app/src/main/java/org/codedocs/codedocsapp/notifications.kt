@@ -87,9 +87,7 @@ class notifications : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        val fm=getChildFragmentManager()
-        val ft=fm.beginTransaction()
-        ft.remove(notifications())
+
         listener = null
     }
 
@@ -128,68 +126,24 @@ class notifications : Fragment() {
                     }
                 }
     }
-    fun getnotifc() {
-
-        var notifs = db.collection("count").document("counts")
-        notifs.get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                ncount = Integer.parseInt(task.result.get("count").toString())
-                Log.e("bleh2", "success")
-                Log.e("bleh", "" + ncount)
-                Timer().schedule(object : TimerTask() {
-                    override fun run () {
-                        i = ncount as Int
-                        getnotis()
-
-                    }
-                }, 3000)
 
 
 
-            }
-        }
-
-
-    }
-
-
-    fun getnotis() {
-        var k=i
-        var l=(k-3)
-        while (i>0||i==1||i==2||i==3) {
-            var notifs = db.collection("notifs").document(i.toString())
-            notifs.get().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    nname=task.result.get("name").toString()
-                    ndesc=task.result.get("desc").toString()
-                    fdesc=task.result.get("fdesc").toString()
-
-                    Log.e("bleh5",nname)
-                    Log.e("bleh6",ndesc)
-                    tvn(nname!!,ndesc!!,fdesc!!)
-
-
-                }
-
-            }
-            i--
-        }
-    }
     fun tvn(name:String?,desc:String?,fdesc:String?){
         var cardView:CardView= CardView(getContext()!!)
         var linearLayout:LinearLayout=LinearLayout(getContext()!!)
         var tvName:TextView=TextView(getContext()!!)
         tvName!!.setText(name)
         tvName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f)
-        tvName.setTextColor(Color.parseColor("#817fa0"))
+        tvName.setTextColor(Color.parseColor("#000000"))
         var tvDesc:TextView=TextView(getContext())
         tvDesc!!.setText(desc)
         tvDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f)
-        tvDesc.setTextColor(Color.parseColor("#191919"))
+        tvDesc.setTextColor(Color.parseColor("#ffffff"))
         linearLayout!!.setOrientation(LinearLayout.VERTICAL)
         linearLayout!!.addView(tvName)
         linearLayout!!.addView(tvDesc)
-        linearLayout.setBackgroundColor(Color.parseColor("#F5F5F5"))
+        linearLayout.setBackgroundColor(Color.parseColor("#546E7A"))
 
         cardView!!.addView(linearLayout)
         cardView!!.setOnClickListener{
@@ -241,6 +195,55 @@ class notifications : Fragment() {
         } catch (e: Exception) {
             Log.e("blehpop2",e.message)
         }
+
+    }
+    fun getnotifc() {
+
+        var notifs = db.collection("count").document("counts")
+        notifs.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                ncount = Integer.parseInt(task.result.get("count").toString())
+                Log.e("bleh2", "success")
+                Log.e("bleh", "" + ncount)
+                Timer().schedule(object : TimerTask() {
+                    override fun run () {
+                        i = ncount as Int
+                        getnotis()
+
+                    }
+                }, 3000)
+
+
+
+            }
+        }
+
+
+    }
+
+
+    fun getnotis() {
+        var k=i
+        var l=(k-3)
+        while (i>0||i==1||i==2||i==3) {
+            var notifs = db.collection("notifs").document(i.toString())
+            notifs.get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    nname=task.result.get("name").toString()
+                    ndesc=task.result.get("desc").toString()
+                    fdesc=task.result.get("fdesc").toString()
+
+                    Log.e("bleh5",nname)
+                    Log.e("bleh6",ndesc)
+                    tvn(nname!!,ndesc!!,fdesc)
+
+
+                }
+
+            }
+            i--
+        }
+
 
     }
 
